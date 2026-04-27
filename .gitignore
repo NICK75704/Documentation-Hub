@@ -2,3 +2,4 @@ documents/
 data/
 uv.lock
 .python-version
+testing.py
