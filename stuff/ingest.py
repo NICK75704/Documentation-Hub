@@ -6,6 +6,7 @@ start_path = 'stuff/documents'
 data_dir = 'stuff/data/'
 
 all_files = []
+chunk_size = 150
 
 def get_folder_structure(startpath):
     global all_files
@@ -15,14 +16,26 @@ def get_folder_structure(startpath):
             all_files.append(file_path)
     print(all_files)
 
-def chunk(file_name, contents, file_path):
+def chunk(file_name, contents, file_path, chunk_size = 300):
     global data_dir
-    split_contents = contents.split(" ")
-    for i in range(len(split_contents) -1):
-        split_contents[i] = split_contents[i] + " "
-        i += 1
+    
+    words = contents.split()
+
+    split_contents = []
+    for i in range(0, len(words), chunk_size):
+        chunk_segment = words[i : i + chunk_size]
+        split_contents.append(" ".join(chunk_segment))
+
+    data = {
+        "metadata": {
+            "file_name": file_name,
+            "file_path": file_path
+        },
+        "content": 
+            split_contents
+    }
+
     with open(f'{data_dir}/{file_name}.json', 'w') as f:
-        data = [file_name, file_path, split_contents]
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 def get_file_name(file):
@@ -39,4 +52,4 @@ for file in all_files:
     contents = docToText.main(file)
     file_name = get_file_name(file)
     # print(document)
-    chunk(file_name, contents, file)
+    chunk(file_name, contents, file, chunk_size)

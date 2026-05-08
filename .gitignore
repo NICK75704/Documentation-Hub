@@ -1,5 +1,7 @@
 documents/
 data/
+db/
 uv.lock
 .python-version
 testing.py
+setup.py

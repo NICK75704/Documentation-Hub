@@ -20,6 +20,16 @@ def make_data_dir():
         print("Data dir already exists!")
     except PermissionError:
         print("Don't have permission to make a new directory")
+        exit 
+
+def make_db_dir():
+    try:
+        os.mkdir("data")
+        print("Made data dir...")
+    except FileExistsError:
+        print("Data dir already exists!")
+    except PermissionError:
+        print("Don't have permission to make a new directory")
         exit       
 
 make_doc_dir()
